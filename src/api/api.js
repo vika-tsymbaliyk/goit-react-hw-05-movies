@@ -26,11 +26,20 @@ export async function fetchMovieActors(movieId){
   // console.log(data)
   return data;
 }
+
 export async function fetchMovieReviews(movieId){
   const {data} = await axios.get(
     `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${API_KEY}&append_to_response=videos,images`
   );
   // console.log(data)
+  return data;
+}
+
+export async function fetchMovieBySearch(query){
+  const {data} = await axios.get(
+    `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&include_adult=false&language=en-US'`
+  );
+  console.log(data)
   return data;
 }
 

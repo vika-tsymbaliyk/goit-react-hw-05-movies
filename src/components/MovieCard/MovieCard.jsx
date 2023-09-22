@@ -4,7 +4,7 @@ export const MovieCard = ({movie})=>{
     'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700';
     const userScore = Math.ceil(vote_average*10);
     const year = release_date.slice(0,4)
-    console.log(poster_path);
+    
     return(
         <div>
              <img src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}`: defaultImg}

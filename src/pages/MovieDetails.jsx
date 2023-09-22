@@ -1,13 +1,17 @@
 import { fetchMovieById } from "api/api";
+import GoBackButton from "components/GoBackButton/GoBackButton";
 
 import { MovieCard } from "components/MovieCard/MovieCard";
 
 import { useEffect, useState } from "react";
-import { Link, Outlet, useParams } from "react-router-dom"
+import { Link, Outlet, useLocation, useParams } from "react-router-dom"
 
 const MovieDetails = ()=>{
     const [movie , setMovie] = useState(null);
     const {movieId} = useParams();
+    const location = useLocation();
+    const backLink = location.state?.from ?? '/';
+
     useEffect(()=>{getMovieDetails(movieId)},[movieId])
 
     const getMovieDetails = async(movieId)=>{
@@ -22,10 +26,10 @@ const MovieDetails = ()=>{
     if (!movie) {
         return <p>Loading...</p>;
       }
-    
+    console.log();
 return (
     <div>
-        <button>go back</button>
+        <GoBackButton/>
 
         <MovieCard movie={movie}/>
         <div>

@@ -29,7 +29,7 @@ const Reviews = ()=>{
     return(
         <div>
             {isEmpty && (<p >We don`t have any reviews for this movie. </p>)}
-            {reviews.length > 0 &&  ( 
+            {!isEmpty &&  ( 
             <ul>
                 {reviews.map(review => <li key={review.id}> <span>{review.author}</span>
                 <p>{review.content}</p> </li>)}
