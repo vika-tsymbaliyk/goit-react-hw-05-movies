@@ -1,18 +1,19 @@
 import { fetchMovieById } from "api/api";
+
 import { MovieCard } from "components/MovieCard/MovieCard";
+
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { Link, Outlet, useParams } from "react-router-dom"
 
-export const MovieDetails = ()=>{
-    const [movie , setMovie] = useState(null)
+const MovieDetails = ()=>{
+    const [movie , setMovie] = useState(null);
     const {movieId} = useParams();
-    useEffect(()=>{getMovie(movieId)},[movieId])
+    useEffect(()=>{getMovieDetails(movieId)},[movieId])
 
-    const getMovie = async(movieId)=>{
+    const getMovieDetails = async(movieId)=>{
         try {
             const movie = await fetchMovieById(movieId);
-            // console.log(movie);
-            setMovie(movie)
+            setMovie(movie);
           } catch (error) {
             console.log(error.message)
           } finally {
@@ -27,7 +28,17 @@ return (
         <button>go back</button>
 
         <MovieCard movie={movie}/>
+        <div>
+          <p>Additional information</p>
+          <ul>
+            <li><Link to={`cast`}>Cast</Link></li>
+            <li><Link to={`reviews`}>Reviews</Link></li>
+          </ul>
+          <Outlet/>
+        </div>
 
     </div>
 )
 }
+
+export default MovieDetails;
