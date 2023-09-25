@@ -1,6 +1,6 @@
 
 import { fetchTrendingMovies } from "api/api";
-import { MainContainer, CenterContainer } from "components/BodyStyle";
+import { MainContainer} from "components/BodyStyle";
 import Loader from "components/Loader/Loader";
 import { MoviesList } from "components/MoviesList/MoviesList";
 import { useEffect, useState } from "react";
@@ -30,11 +30,11 @@ const Home = () =>{
 return (
     
     <MainContainer>
-      <CenterContainer>
+      
         {loading && <Loader/>}
         {error && (<p >❌ Something went wrong - {error}</p>)}
         {isEmpty && (<p >Sorry. Something went wrong... 😭</p>)}
-      </CenterContainer>
+      
         
         <h1>Trending today</h1>
         <MoviesList movies={movies}/>
