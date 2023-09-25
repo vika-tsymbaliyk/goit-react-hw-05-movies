@@ -2,6 +2,7 @@ import { fetchMovieActors } from "api/api";
 import Loader from "components/Loader/Loader";
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
+import { CastList } from "./Cast.styled";
 
 const Cast =() => {
     const { movieId } = useParams();
@@ -35,7 +36,7 @@ return(
     <div>
         {loading && <Loader/>}
         {error && (<p >❌ Something went wrong - {error}</p>)}
-        <ul>
+        <CastList>
             {actors.map(actor => <li key={actor.id}> 
                 <img src={actor.profile_path ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`: defaultImg}
                     width={100}
@@ -43,7 +44,7 @@ return(
             <p>{actor.name}</p>
             <p>Character: {actor.character}</p>
              </li>)}
-        </ul>
+        </CastList>
     </div>
 )
 }

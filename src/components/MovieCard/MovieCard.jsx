@@ -1,3 +1,5 @@
+import { MovieCardStyled, MovieCardInfo } from "./MovieCard.styled";
+
 export const MovieCard = ({movie})=>{
     const {title, overview, genres, vote_average, poster_path, release_date} = movie;
     const defaultImg =
@@ -6,19 +8,19 @@ export const MovieCard = ({movie})=>{
     const year = release_date.slice(0,4)
     
     return(
-        <div>
+        <MovieCardStyled>
              <img src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}`: defaultImg}
                     width={250}
                     alt="poster" />
-            <div>
+            <MovieCardInfo>
                 <h2>{title} ({year})</h2>
                 <p>User Score: {userScore} %</p>
                 <h3>Overview:</h3>
                 <p> {overview}</p>
                 <h3>Genres:</h3>
-                <p> {genres.map(genre=> <span key={genre.id}>{genre.name}, </span>)}</p>
+                <p> {genres.map(genre=> <span key={genre.id}>{genre.name} </span>)}</p>
 
-            </div>
-        </div>
+            </MovieCardInfo>
+        </MovieCardStyled>
     )
 }

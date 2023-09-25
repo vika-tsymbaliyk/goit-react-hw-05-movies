@@ -1,4 +1,5 @@
 import { fetchMovieBySearch } from "api/api";
+import { MainContainer } from "components/BodyStyle";
 import Loader from "components/Loader/Loader";
 import { MoviesList } from "components/MoviesList/MoviesList";
 import SearchForm from "components/SearchForm/SearchForm";
@@ -40,13 +41,13 @@ const Movies = ()=>{
       };
 
  return(
-    <div>
+    <MainContainer>
       <SearchForm onSubmit={handleSubmit}/>
       {loading && <Loader/>}
       {isEmpty && (<p >We don`t find any movies for your request. </p>)}
       {!isEmpty && <MoviesList movies={movies}/>}
 
-    </div>
+    </MainContainer>
  )
 }
 

@@ -1,4 +1,5 @@
 import { fetchMovieReviews } from "api/api";
+import { CastList } from "components/Cast/Cast.styled";
 import Loader from "components/Loader/Loader";
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
@@ -33,10 +34,10 @@ const Reviews = ()=>{
             {loading && <Loader/>}
             {isEmpty && (<p >We don`t have any reviews for this movie. </p>)}
             {!isEmpty &&  ( 
-            <ul>
+            <CastList>
                 {reviews.map(review => <li key={review.id}> <span>{review.author}</span>
                 <p>{review.content}</p> </li>)}
-            </ul> )}
+            </CastList> )}
         </div>
     )
 }

@@ -1,9 +1,11 @@
 import { fetchMovieById } from "api/api";
 import { MovieCard } from "components/MovieCard/MovieCard";
 import { useEffect, useRef, useState } from "react";
-import { Link, Outlet, useLocation, useParams } from "react-router-dom"
+import { Outlet, useLocation, useParams } from "react-router-dom"
 import { Suspense } from "react";
 import Loader from "components/Loader/Loader";
+import { LinkStyled, LinkStyledBtn, MainContainer } from "components/BodyStyle";
+import { List } from "components/MovieCard/MovieCard.styled";
 
 const MovieDetails = ()=>{
     const [movie , setMovie] = useState(null);
@@ -31,23 +33,23 @@ const MovieDetails = ()=>{
       }
 
 return (
-    <div>
-      <Link to={backLink.current}> go back</Link>
+    <MainContainer>
+      <LinkStyledBtn to={backLink.current}> Go back</LinkStyledBtn>
       {loading && <Loader/>}
       {error && (<p >❌ Something went wrong - {error}</p>)}
         <MovieCard movie={movie}/>
         <div>
           <p>Additional information</p>
-          <ul>
-            <li><Link to={`cast`}>Cast</Link></li>
-            <li><Link to={`reviews`}>Reviews</Link></li>
-          </ul>
+          <List>
+            <li><LinkStyled to={`cast`}>Cast</LinkStyled></li>
+            <li><LinkStyled to={`reviews`}> Reviews</LinkStyled></li>
+          </List>
           <Suspense fallback={<Loader/>}>
             <Outlet />
           </Suspense>
         </div>
 
-    </div>
+    </MainContainer>
 )
 }
 
