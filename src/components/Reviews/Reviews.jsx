@@ -1,11 +1,13 @@
 import { fetchMovieReviews } from "api/api";
+import Loader from "components/Loader/Loader";
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 
 const Reviews = ()=>{
     const { movieId } = useParams();
     const [reviews, setReviews]= useState([]);
-    const [isEmpty, setIsEmpty] = useState(false)
+    const [isEmpty, setIsEmpty] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => { if (!movieId) {
         return } 
@@ -19,15 +21,16 @@ const Reviews = ()=>{
             setIsEmpty(true);
           }
           setReviews(results);
-            console.log(results)
+  
         } catch (error) {
           console.log(error.message)
         } finally {
-          
+          setLoading(false);
         }
       };
     return(
         <div>
+            {loading && <Loader/>}
             {isEmpty && (<p >We don`t have any reviews for this movie. </p>)}
             {!isEmpty &&  ( 
             <ul>

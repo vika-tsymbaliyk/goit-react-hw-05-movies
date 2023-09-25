@@ -1,5 +1,6 @@
 
 import { fetchTrendingMovies } from "api/api";
+import Loader from "components/Loader/Loader";
 import { MoviesList } from "components/MoviesList/MoviesList";
 import { useEffect, useState } from "react";
 
@@ -28,7 +29,7 @@ const Home = () =>{
 return (
     
     <div>
-        {loading}
+        {loading && <Loader/>}
         {error && (<p >❌ Something went wrong - {error}</p>)}
         {isEmpty && (<p >Sorry. Something went wrong... 😭</p>)}
         <h1>Trending today</h1>

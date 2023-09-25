@@ -1,4 +1,5 @@
 import { fetchMovieBySearch } from "api/api";
+import Loader from "components/Loader/Loader";
 import { MoviesList } from "components/MoviesList/MoviesList";
 import SearchForm from "components/SearchForm/SearchForm";
 import { useEffect, useState } from "react";
@@ -7,7 +8,8 @@ import { useSearchParams } from "react-router-dom";
 const Movies = ()=>{
    const [searchParams, setSearchParams] = useSearchParams();
    const [movies, setMovies]= useState([]);
-   const [isEmpty, setIsEmpty] = useState(false)
+   const [isEmpty, setIsEmpty] = useState(false);
+   const [loading, setLoading] = useState(false);
 
    const query = searchParams.get('query') ?? '';
 
@@ -18,16 +20,16 @@ const Movies = ()=>{
 
    const SerchMovies = async(searchParams) =>{
       try {
+         setIsEmpty(false)
          const  {results} = await fetchMovieBySearch(searchParams);
          setMovies(results);
-         if (results.length<0){
+         if (results.length === 0){
             setIsEmpty(true)
          }
-         console.log(results);
        } catch (error) {
          console.log(error.message)
        } finally {
-         
+         setLoading(false);
        }
    }
 
@@ -40,6 +42,7 @@ const Movies = ()=>{
  return(
     <div>
       <SearchForm onSubmit={handleSubmit}/>
+      {loading && <Loader/>}
       {isEmpty && (<p >We don`t find any movies for your request. </p>)}
       {!isEmpty && <MoviesList movies={movies}/>}
 

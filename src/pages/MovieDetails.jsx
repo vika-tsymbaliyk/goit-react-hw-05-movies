@@ -1,36 +1,40 @@
 import { fetchMovieById } from "api/api";
-import GoBackButton from "components/GoBackButton/GoBackButton";
-
 import { MovieCard } from "components/MovieCard/MovieCard";
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom"
+import { Suspense } from "react";
+import Loader from "components/Loader/Loader";
 
 const MovieDetails = ()=>{
     const [movie , setMovie] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     const {movieId} = useParams();
     const location = useLocation();
-    const backLink = location.state?.from ?? '/';
+    const backLink = useRef(location?.state?.from ?? '/');
 
     useEffect(()=>{getMovieDetails(movieId)},[movieId])
-
+    
     const getMovieDetails = async(movieId)=>{
         try {
+            setLoading(true);
             const movie = await fetchMovieById(movieId);
             setMovie(movie);
           } catch (error) {
-            console.log(error.message)
+            setError(error.message)
           } finally {
+            setLoading(false);
           }
     }
     if (!movie) {
-        return <p>Loading...</p>;
+        return <Loader/>;
       }
-    console.log();
+
 return (
     <div>
-        <GoBackButton/>
-
+      <Link to={backLink.current}> go back</Link>
+      {loading && <Loader/>}
+      {error && (<p >❌ Something went wrong - {error}</p>)}
         <MovieCard movie={movie}/>
         <div>
           <p>Additional information</p>
@@ -38,7 +42,9 @@ return (
             <li><Link to={`cast`}>Cast</Link></li>
             <li><Link to={`reviews`}>Reviews</Link></li>
           </ul>
-          <Outlet/>
+          <Suspense fallback={<Loader/>}>
+            <Outlet />
+          </Suspense>
         </div>
 
     </div>
